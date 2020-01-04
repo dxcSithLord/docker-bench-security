@@ -114,6 +114,7 @@ get_systemd_service_file() {
     echo "/usr/lib/systemd/system/$SERVICE"
   fi
 }
+
 #
 # This is a generic replacement for all the "check_*" functions that repeat most of the same code
 # reducing the overall length significantly and avoiding repeat errors

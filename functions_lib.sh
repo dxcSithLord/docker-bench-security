@@ -6,11 +6,11 @@ host_configuration() {
   check_1_1_1
   check_1_1_2
   check_1_2
-  check_1_2_1
+  make_check "1.2.1" "Ensure a separate partition for containers has been created"
   check_1_2_2
-  check_1_2_3
+  make_check "1.2.3" "Ensure auditing is configured for the Docker daemon"
   check_1_2_4
-  check_1_2_5
+  make_check "1.2.5" "Ensure auditing is configured for Docker files and directories - /etc/docker"
   check_1_2_6
   check_1_2_7
   check_1_2_8

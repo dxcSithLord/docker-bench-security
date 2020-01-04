@@ -67,22 +67,13 @@ check_1_2() {
 
 # 1.2.1
 check_1_2_1() {
-  id_1_2_1="1.2.1"
-  desc_1_2_1="Ensure a separate partition for containers has been created"
-  check_1_2_1="$id_1_2_1 - $desc_1_2_1"
-  starttestjson "$id_1_2_1" "$desc_1_2_1"
-
-  totalChecks=$((totalChecks + 1))
-
+  retval=0
   if mountpoint -q -- "$(docker info -f '{{ .DockerRootDir }}')" >/dev/null 2>&1; then
-    pass "$check_1_2_1"
-    resulttestjson "PASS"
-    currentScore=$((currentScore + 1))
+    retval=0
   else
-    warn "$check_1_2_1"
-    resulttestjson "WARN"
-    currentScore=$((currentScore - 1))
+    retval=1
   fi
+  return "$retval"
 }
 
 # 1.2.2
@@ -104,32 +95,20 @@ check_1_2_2() {
 
 # 1.2.3
 check_1_2_3() {
-  id_1_2_3="1.2.3"
-  desc_1_2_3="Ensure auditing is configured for the Docker daemon"
-  check_1_2_3="$id_1_2_3  - $desc_1_2_3"
-  starttestjson "$id_1_2_3" "$desc_1_2_3"
-
-  totalChecks=$((totalChecks + 1))
+  retval=0
   file="/usr/bin/dockerd"
   if command -v auditctl >/dev/null 2>&1; then
     if auditctl -l | grep "$file" >/dev/null 2>&1; then
-      pass "$check_1_2_3"
-      resulttestjson "PASS"
-      currentScore=$((currentScore + 1))
+      retval=0
     else
-      warn "$check_1_2_3"
-      resulttestjson "WARN"
-      currentScore=$((currentScore - 1))
+      retval=1
     fi
   elif grep -s "$file" "$auditrules" | grep "^[^#;]" 2>/dev/null 1>&2; then
-    pass "$check_1_2_3"
-    resulttestjson "PASS"
-    currentScore=$((currentScore + 1))
+    retval=0
   else
-    warn "$check_1_2_3"
-    resulttestjson "WARN"
-    currentScore=$((currentScore - 1))
+    retval=1
   fi
+  return "$retval"
 }
 
 # 1.2.4
@@ -171,39 +150,27 @@ check_1_2_4() {
 
 # 1.2.5
 check_1_2_5() {
-  id_1_2_5="1.2.5"
-  desc_1_2_5="Ensure auditing is configured for Docker files and directories - /etc/docker"
-  check_1_2_5="$id_1_2_5  - $desc_1_2_5"
-  starttestjson "$id_1_2_5" "$desc_1_2_5"
-
-  totalChecks=$((totalChecks + 1))
+  retval=0
   directory="/etc/docker"
   if [ -d "$directory" ]; then
     if command -v auditctl >/dev/null 2>&1; then
       if auditctl -l | grep $directory >/dev/null 2>&1; then
-        pass "$check_1_2_5"
-        resulttestjson "PASS"
-        currentScore=$((currentScore + 1))
+        retval=0
       else
-        warn "$check_1_2_5"
-        resulttestjson "WARN"
-        currentScore=$((currentScore - 1))
+        retval=1
       fi
     elif grep -s "$directory" "$auditrules" | grep "^[^#;]" 2>/dev/null 1>&2; then
-      pass "$check_1_2_5"
-      resulttestjson "PASS"
-      currentScore=$((currentScore + 1))
+      retval=0
     else
-      warn "$check_1_2_5"
-      resulttestjson "WARN"
-      currentScore=$((currentScore - 1))
+      retval=1
     fi
   else
     info "$check_1_2_5"
     info "       * Directory not found"
     resulttestjson "INFO" "Directory not found"
     currentScore=$((currentScore + 0))
-fi
+  fi
+  return "$retval"
 }
 
 # 1.2.6
