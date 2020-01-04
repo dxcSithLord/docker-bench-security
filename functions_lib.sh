@@ -6,11 +6,11 @@ host_configuration() {
   check_1_1_1
   check_1_1_2
   check_1_2
-  make_check "1.2.1" "Ensure a separate partition for containers has been created"
+  make_check "1_2_1" "Ensure a separate partition for containers has been created"
   check_1_2_2
-  make_check "1.2.3" "Ensure auditing is configured for the Docker daemon"
+  make_check "1_2_3" "Ensure auditing is configured for the Docker daemon"
   check_1_2_4
-  make_check "1.2.5" "Ensure auditing is configured for Docker files and directories - /etc/docker"
+  make_check "1_2_5" "Ensure auditing is configured for Docker files and directories - /etc/docker"
   check_1_2_6
   check_1_2_7
   check_1_2_8
@@ -23,23 +23,23 @@ host_configuration() {
 
 docker_daemon_configuration() {
   check_2
-  make_check "2.1" "Ensure network traffic is restricted between containers on the default bridge"
-  make_check "2.2" "Ensure the logging level is set to 'info'"
-  make_check "2.3" "Ensure Docker is allowed to make changes to iptables"
-  make_check "2.4" "Ensure insecure registries are not used"
-  make_check "2.5" "Ensure aufs storage driver is not used"
+  make_check "2_1" "Ensure network traffic is restricted between containers on the default bridge"
+  make_check "2_2" "Ensure the logging level is set to 'info'"
+  make_check "2_3" "Ensure Docker is allowed to make changes to iptables"
+  make_check "2_4" "Ensure insecure registries are not used"
+  make_check "2_5" "Ensure aufs storage driver is not used"
   check_2_6
   check_2_7
-  make_check "2.8" "Enable user namespace support"
+  make_check "2_8" "Enable user namespace support"
   check_2_9
-  make_check "2.10" "Ensure base device size is not changed until needed"
-  make_check "2.11" "Ensure that authorization for Docker client commands is enabled"
-  make_check "2.12" "Ensure centralized and remote logging is configured"
-  make_check "2.13" "Ensure live restore is Enabled"
-  make_check "2.14" "Ensure Userland Proxy is Disabled"
+  make_check "2_10" "Ensure base device size is not changed until needed"
+  make_check "2_11" "Ensure that authorization for Docker client commands is enabled"
+  make_check "2_12" "Ensure centralized and remote logging is configured"
+  make_check "2_13" "Ensure live restore is Enabled"
+  make_check "2_14" "Ensure Userland Proxy is Disabled"
   check_2_15
-  make_check "2.16" "Ensure that experimental features are not implemented in production"
-  make_check "2.17" "Ensure containers are restricted from acquiring new privileges"
+  make_check "2_16" "Ensure that experimental features are not implemented in production"
+  make_check "2_17" "Ensure containers are restricted from acquiring new privileges"
   check_2_end
 }
 
