@@ -114,6 +114,93 @@ get_systemd_service_file() {
     echo "/usr/lib/systemd/system/$SERVICE"
   fi
 }
+#
+# This is a generic replacement for all the "check_*" functions that repeat most of the same code
+# reducing the overall length significantly and avoiding repeat errors
+#
+# The quoted values are from the grep string expression below
+# This assumes that the id reference is a string with
+# starting with (beginning of the line) "^"
+# number in the range 1-9 "[1-9]", followed by
+# zero or more digits 0-9 "[0-9]*", followed by
+# with zero or more of the following "(":
+# the single underscore character "_"
+# a number in the range 1-9 "[1-9]", followed by
+# zero or more digits in the range 0-9 "[0-9]*"
+# close sequence ")*"
+# terminating with the line end "$".
+# Any other test or spaces  before or after will cause the match to fail.
+# Possible matches include:
+# 1 2 3 4 5 6 7 8 9
+# 1_1 1_1_1 1_1_1_1
+# 10_1_2_3_4_50
+# 900_1_604
+# Not valid:
+# 0 leading zero
+# 1_ trailing underscore
+# 1_0 leading zero
+# 9_8_0 leading zero
+# 2_04 leading zero
+# The resulting function is a concatination of
+# check_ and $1
+# The id is the same, but with "_" replaced with "." character
+# The functions need to return 0 for success - anything else will
+# generate a warning
+
+make_check() {
+  if echo "$1" | grep -cwE '^[1-9][0-9]*(_[1-9][0-9]*)*$' -eq 1; then
+    check_ref=$(echo "$1" | sed -e "s/_/./g")
+    id_ref="$1"
+    desc_ref="$2"
+    check_desc="$check_ref - $desc_ref"
+    starttestjson "$id_ref" "$desc_ref"
+
+    totalChecks=$((totalChecks + 1))
+    if check_${id_ref} -eq 0; then
+      pass "$check_desc"
+      resulttestjson "PASS"
+      currentScore=$((currentScore + 1))
+    else
+      warn "$check_desc"
+      resulttestjson "WARN"
+      currentScore=$((currentScore - 1))
+    fi
+  else
+    warn "$1 - test reference syntax invalid; Description: $2"
+  fi
+}
+#example_check_call(){
+#  make_check "1_2_3" "test check"
+#}
+
+
+check_L1() {
+  # arg1 = id
+  # arg2 = descrition
+  # function initialises logit, puts info
+  # and startsectionjson
+  logit ""
+  id_L1=$1
+  desc_L1=$2
+  check_L1="$id_L1 - $desc_L1"
+  info "$check_L1"
+  startsectionjson "$id_L1" "$desc_L1"
+}
+
+check_L2() {
+  # arg1 = id
+  # arg2 = descrition
+  # function initialises logit, puts info
+  logit ""
+  id_L2=$(echo "$1" | sed -e "s/_/./g")
+  desc_L2=$2
+  check_L2="$id_L2 - $desc_L2"
+  info "$check_L2"
+}
+
+check_ennd(){
+  endsectionjson
+}
 
 yell_info() {
 yell "# ------------------------------------------------------------------------------
