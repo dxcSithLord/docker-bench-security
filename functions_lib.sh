@@ -23,23 +23,23 @@ host_configuration() {
 
 docker_daemon_configuration() {
   check_2
-  check_2_1
-  check_2_2
-  check_2_3
-  check_2_4
-  check_2_5
+  make_check "2.1" "Ensure network traffic is restricted between containers on the default bridge"
+  make_check "2.2" "Ensure the logging level is set to 'info'"
+  make_check "2.3" "Ensure Docker is allowed to make changes to iptables"
+  make_check "2.4" "Ensure insecure registries are not used"
+  make_check "2.5" "Ensure aufs storage driver is not used"
   check_2_6
   check_2_7
-  check_2_8
+  make_check "2.8" "Enable user namespace support"
   check_2_9
-  check_2_10
-  check_2_11
-  check_2_12
-  check_2_13
-  check_2_14
+  make_check "2.10" "Ensure base device size is not changed until needed"
+  make_check "2.11" "Ensure that authorization for Docker client commands is enabled"
+  make_check "2.12" "Ensure centralized and remote logging is configured"
+  make_check "2.13" "Ensure live restore is Enabled"
+  make_check "2.14" "Ensure Userland Proxy is Disabled"
   check_2_15
-  check_2_16
-  check_2_17
+  make_check "2.16" "Ensure that experimental features are not implemented in production"
+  make_check "2.17" "Ensure containers are restricted from acquiring new privileges"
   check_2_end
 }
 
