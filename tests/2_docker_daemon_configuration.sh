@@ -51,7 +51,7 @@ check_2_3() {
   elif get_docker_configuration_file_args 'iptables' | grep "false" >/dev/null 2>&1; then
     retval=1
   fi
-  return "$retavl"
+  return "$retval"
 }
 
 # 2.4

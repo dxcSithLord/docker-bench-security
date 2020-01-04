@@ -146,10 +146,11 @@ get_systemd_service_file() {
 # check_ and $1
 # The id is the same, but with "_" replaced with "." character
 # The functions need to return 0 for success - anything else will
-# generate a warning
+# generate a WARN result.
+#
 
 make_check() {
-  if echo "$1" | grep -cwE '^[1-9][0-9]*(_[1-9][0-9]*)*$' -eq 1; then
+  if echo "$1" \| grep -cwE '^[1-9][0-9]*(_[1-9][0-9]*)*$' -eq 1 >/dev/null 2>&1; then
     check_ref=$(echo "$1" | sed -e "s/_/./g")
     id_ref="$1"
     desc_ref="$2"

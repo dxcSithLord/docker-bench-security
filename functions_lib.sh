@@ -132,12 +132,12 @@ docker_security_operations() {
 
 docker_swarm_configuration() {
   check_7
-  check_7_1
-  check_7_2
-  check_7_3
+  make_check "7.1" "Ensure swarm mode is not Enabled, if not needed"
+  make_check "7.2" "Ensure that the minimum number of manager nodes have been created in a swarm"
+  make_check "7.3" "Ensure that swarm services are bound to a specific host interface"
   check_7_4
   check_7_5
-  check_7_6
+  make_check "7.6" "Ensure that swarm manager is run in auto-lock mode"
   check_7_7
   check_7_8
   check_7_9
