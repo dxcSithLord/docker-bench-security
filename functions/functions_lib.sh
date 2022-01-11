@@ -5,19 +5,60 @@ host_configuration() {
   check_1_1
   check_1_1_1
   check_1_1_2
+  check_1_1_3
+  check_1_1_4
+  check_1_1_5
+  check_1_1_6
+  check_1_1_7
+  check_1_1_8
+  check_1_1_9
+  check_1_1_10
+  check_1_1_11
+  check_1_1_12
+  check_1_1_13
+  check_1_1_14
+  check_1_1_15
+  check_1_1_16
+  check_1_1_17
+  check_1_1_18
+  check_1_2
+  check_1_2_1
+  check_1_2_2
+  check_1_end
+}
+
+host_configuration_level1() {
+  check_1
+  check_1_end
+}
+
+linux_hosts_specific_configuration() {
+  check_1_1
+  check_1_1_1
+  check_1_1_2
+  check_1_1_3
+  check_1_1_4
+  check_1_1_5
+  check_1_1_6
+  check_1_1_7
+  check_1_1_8
+  check_1_1_9
+  check_1_1_10
+  check_1_1_11
+  check_1_1_12
+  check_1_1_13
+  check_1_1_14
+  check_1_1_15
+  check_1_1_16
+  check_1_1_17
+  check_1_1_18
+}
+
+host_general_configuration() {
+  check_1
   check_1_2
   make_check "1_2_1" "Ensure a separate partition for containers has been created"
   check_1_2_2
-  make_check "1_2_3" "Ensure auditing is configured for the Docker daemon"
-  check_1_2_4
-  make_check "1_2_5" "Ensure auditing is configured for Docker files and directories - /etc/docker"
-  check_1_2_6
-  check_1_2_7
-  check_1_2_8
-  check_1_2_9
-  check_1_2_10
-  check_1_2_11
-  check_1_2_12
   check_1_end
 }
 
@@ -38,8 +79,14 @@ docker_daemon_configuration() {
   make_check "2_13" "Ensure live restore is Enabled"
   make_check "2_14" "Ensure Userland Proxy is Disabled"
   check_2_15
-  make_check "2_16" "Ensure that experimental features are not implemented in production"
-  make_check "2_17" "Ensure containers are restricted from acquiring new privileges"
+  check_2_16
+  check_2_17
+  check_2_18
+  check_2_end
+}
+
+docker_daemon_configuration_level1() {
+  check_2
   check_2_end
 }
 
@@ -67,6 +114,13 @@ docker_daemon_files() {
   check_3_20
   check_3_21
   check_3_22
+  check_3_23
+  check_3_24
+  check_3_end
+}
+
+docker_daemon_files_level1() {
+  check_3
   check_3_end
 }
 
@@ -83,6 +137,11 @@ container_images() {
   check_4_9
   check_4_10
   check_4_11
+  check_4_end
+}
+
+container_images_level1() {
+  check_4
   check_4_end
 }
 
@@ -123,7 +182,19 @@ container_runtime() {
   check_5_end
 }
 
+container_runtime_level1() {
+  check_5
+  check_5_end
+}
+
 docker_security_operations() {
+  check_6
+  check_6_1
+  check_6_2
+  check_6_end
+}
+
+docker_security_operations_level1() {
   check_6
   check_6_1
   check_6_2
@@ -145,6 +216,11 @@ docker_swarm_configuration() {
   check_7_end
 }
 
+docker_swarm_configuration_level1() {
+  check_7
+  check_7_end
+}
+
 docker_enterprise_configuration() {
   check_8
   check_product_license
@@ -161,10 +237,51 @@ docker_enterprise_configuration() {
   check_8_end
 }
 
+docker_enterprise_configuration_level1() {
+  check_8
+  check_product_license
+  check_8_1
+  check_8_1_1
+  check_8_1_2
+  check_8_1_3
+  check_8_1_4
+  check_8_1_5
+  check_8_1_6
+  check_8_1_7
+  check_8_2
+  check_8_2_1
+  check_8_end
+}
+
+universal_control_plane_configuration() {
+  check_8
+  check_8_1
+  check_8_1_1
+  check_8_1_2
+  check_8_1_3
+  check_8_1_4
+  check_8_1_5
+  check_8_1_6
+  check_8_1_7
+  check_8_end
+}
+
+docker_trusted_registry_configuration() {
+  check_8
+  check_8_2
+  check_8_2_1
+  check_8_end
+}
+
 community_checks() {
   check_c
   check_c_1
+  check_c_1_1
   check_c_2
+  check_c_5_3_1
+  check_c_5_3_2
+  check_c_5_3_3
+  check_c_5_3_4
   check_c_end
 }
 
@@ -177,7 +294,16 @@ cis() {
   container_runtime
   docker_security_operations
   docker_swarm_configuration
-  docker_enterprise_configuration
+}
+
+cis_level1() {
+  host_configuration_level1
+  docker_daemon_configuration_level1
+  docker_daemon_files_level1
+  container_images_level1
+  container_runtime_level1
+  docker_security_operations_level1
+  docker_swarm_configuration_level1
 }
 
 # Community contributed
@@ -188,5 +314,6 @@ community() {
 # All
 all() {
   cis
+  docker_enterprise_configuration
   community
 }
