@@ -234,6 +234,6 @@ yell "# ------------------------------------------------------------------------
 # Docker, Inc. (c) 2015-$(date +"%Y")
 #
 # Checks for dozens of common best-practices around deploying Docker containers in production.
-# Based on the CIS Docker Benchmark 1.3.1.
+# Based on the CIS Docker Benchmark 1.4.0.
 # --------------------------------------------------------------------------------------------"
 }
