@@ -1,9 +1,11 @@
 # REPOSITORY https://github.com/fatherlinux/docker-bench-security
 
-FROM centos
+FROM centos:8
 
 MAINTAINER smccarty@redhat.com
 
+RUN dnf update -y
+RUN dnf upgrade -y
 RUN yum install -y docker iproute audit procps-ng; yum clean all
 
 RUN mkdir /docker-bench-security
